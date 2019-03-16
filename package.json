@@ -1,0 +1,11 @@
+{
+  "name": "eslint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./Project \\Euler",
+  "scripts": {
+    "test": "abc"
+  },
+  "author": "",
+  "license": "ISC"
+}

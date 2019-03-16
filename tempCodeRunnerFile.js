@@ -1,0 +1,1 @@
+isRightTrunctableHarshadNumber(trunc)

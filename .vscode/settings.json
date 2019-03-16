@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3",
+    "code-runner.clearPreviousOutput": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.wordWrap": "on",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "search.showLineNumbers": true,
+    "debug.inlineValues": true,
+    "debug.toolBarLocation": "docked",
+}
