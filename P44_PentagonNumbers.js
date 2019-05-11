@@ -6,11 +6,12 @@ It can be seen that P4 + P7 = 22 + 70 = 92 = P8. However, their difference, 70 â
 
 Find the pair of pentagonal numbers, Pj and Pk, for which their sum and difference are pentagonal and D = |Pk âˆ’ Pj| is minimised; what is the value of D?
 
-ANSWER: 5482660 (0.6s)
+ANSWER: 5482660 (0.1s)
 */
 
+/*
 let p = [];
-for (let n = 0; true; n++) {
+for (let n = 0;; n++) {
     p[n] = (n + 1) * (3 * (n + 1) - 1) / 2;
     let m;
     for (m = 0; m < n; m++) {
@@ -30,3 +31,28 @@ function isPentagonal(x) {
     let n = (1 + Math.sqrt(1 + 24 * x)) / 6; //solving for n in the pentagonal formula
     return Math.round(n) == n;
 }
+*/
+console.time("Time");
+let h = [];
+for (let n = 0; ; n++) {
+    h[n] = (n + 1) * (2 * n + 1);
+    let m;
+    for (m = 0; m < n; m++) {
+        let sum = h[n] + h[m];
+        let dif = h[n] - h[m];
+        if (isHexagonal(sum) && isHexagonal(dif)) {
+            console.log(dif);
+            break;
+        }
+    }
+    if (n - m > 1) {
+        break;
+    }
+}
+
+function isHexagonal(x) {
+    let n = (1 + Math.sqrt(1 + 8 * x)) / 4; //solving for n in the hexagonal formula
+    return Math.round(n) == n;
+}
+
+console.timeEnd("Time");

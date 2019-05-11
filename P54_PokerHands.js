@@ -167,7 +167,7 @@ function hasTwoPairs(cards) {
 
 function hasOnePair(cards) {
     let values = new Set();
-    let cardValues = {}
+    let cardValues = {};
     for (let card of cards) {
         values.add(card[0]);
         if (values.size > 4) return false;

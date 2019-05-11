@@ -1,45 +1,59 @@
-# function getProperDivisors(n) {
-#     let divisors = [];
-#     for (let i = 1; i <= Math.sqrt(n); i++) {
-#         if (n % i === 0) {
-#             divisors.push(i);
-#             divisors.push(n / i);
-#         }
-#     }
-#     return divisors.sort((a, b) => a - b);
-# }
+# NOTE: Need more optimization. Takes a few minutes for 10^7 without using sieve of precalculated primes. Maybe try writing it in C.
 
-# function isPrime(n) {
-#     if (n <= 1 || n % 2 == 0) {
-#         return false; //1 isn't prime
-#     } else if (n == 2) {
-#         return true;
-#     } else {
-#         let limit = Math.sqrt(n);
-#         for (let i = 3; i <= limit; i += 2) { //checking all numbers less than sqrt(n) for factors
-#             if (n % i === 0) {
-#                 return false;
-#             }
-#         }
-#         return true;
-#     }
-# }
+# 524402304 till 10^6
+# 27814470276 till 10^7
 
-# let sum = 0;
-# for (let i = 10 ** 6; i < 10 ** 7; i++) {
-#     let divisors = getProperDivisors(i);
-#     let satisfies = true;
-#     for (let divisor of divisors) {
-#         if (!isPrime(divisor + i / divisor)) {
-#             satisfies = false;
-#             break;
-#         }
-#     }
-#     if (satisfies) sum += i;
-# }
+import math
 
-# //till 10 ** 6 = 524402304
+def isPrime(n):
+    prime = True
+    if n <= 1:
+        return False
+    elif n == 2:
+        return True
+    elif n % 2 == 0:
+        return False
+    else:
+        i = 3
+        limit = n ** 0.5
+        while i <= limit:
+            if n % i == 0:
+                return False
+            i += 2
+        return True
 
-sum1 = 0;
-for i in range(100):
-    divisors =
+sum = 0
+
+
+def SieveOfEratosthenesArray(limit):
+    primes = [True] * limit
+    primeNumbers = []
+    primes[0] = primes[1] = False
+    for i, isPrime in enumerate(primes):
+        if isPrime:
+            primeNumbers.append(i)
+            for n in range(i, limit, i):
+                primes[n] = False
+    return primeNumbers
+
+
+def satisfies(n):
+    i = 2
+    while i <= math.sqrt(n):
+        if (n % i == 0):
+            if (n / i == i):
+                return False
+            elif i + n / i not in primes:
+                return False
+        i = i + 1
+    return True
+
+limit = 10 ** 7
+
+primes = SieveOfEratosthenesArray(limit)
+
+for i in range(2, limit, 4):
+    if isPrime(i + 1) and isPrime(2 + i / 2) and satisfies(i):
+        sum += i
+
+print(sum)

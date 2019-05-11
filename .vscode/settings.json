@@ -5,10 +5,13 @@
     "editor.wordWrap": "on",
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "workbench.colorTheme": "Shades of Purple",
     "workbench.statusBar.feedback.visible": false,
     "workbench.editor.highlightModifiedTabs": true,
     "search.showLineNumbers": true,
     "debug.inlineValues": true,
     "debug.toolBarLocation": "docked",
+    "cSpell.words": [
+        "figurate"
+    ],
 }

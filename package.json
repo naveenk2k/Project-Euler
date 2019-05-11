@@ -4,8 +4,8 @@
   "description": "",
   "main": "./Project \\Euler",
   "scripts": {
-    "test": "abc"
+    "test": ""
   },
-  "author": "",
+  "author": "Naveen K Murthy",
   "license": "ISC"
 }

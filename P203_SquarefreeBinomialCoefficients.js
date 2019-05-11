@@ -22,7 +22,6 @@ ANSWER: 34029210557338 (~2.7s)
 let pascal = [];
 let distinct = new Set([1]);
 let dimension = 51;
-let primes = [];
 let sum = 0;
 
 

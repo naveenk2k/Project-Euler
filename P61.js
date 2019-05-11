@@ -1,34 +1,35 @@
-//Generates an array with all 4 digit figurate (polygonal) numbers
-let polygonal_numbers = [];
+//Generates an array with all 4 digit figurate (polygonal) numbers where index 0 contains triangle numbers, index 1 contains square numbers and so on.
+
+let polygonal_numbers = [[], [], [], [], [], []];
 
 for (let i = 45; i <= 140; i++) {
     let t = (i * (i + 1)) / 2;
-    polygonal_numbers.push([3, t]);
+    polygonal_numbers[0].push(t);
 }
 
 for (let i = 32; i <= 99; i++) {
     let s = i ** 2;
-    polygonal_numbers.push([4, s]);
+    polygonal_numbers[1].push(s);
 }
 
 for (let i = 26; i <= 81; i++) {
     let p = (i * ((3 * i) - 1)) / 2;
-    polygonal_numbers.push([5, p]);
+    polygonal_numbers[2].push(p);
 }
 
 for (let i = 23; i <= 70; i++) {
     let h = i * (2 * i - 1);
-    polygonal_numbers.push([6, h]);
+    polygonal_numbers[3].push(h);
 }
 
 for (let i = 21; i <= 63; i++) {
     let h = i * (5 * i - 3) / 2;
-    polygonal_numbers.push([7, h]);
+    polygonal_numbers[4].push(h);
 }
 
 for (let i = 19; i <= 58; i++) {
     let o = i * (3 * i - 2);
-    polygonal_numbers.push([8, o]);
+    polygonal_numbers[5].push(o);
 }
 
 function isCyclic(n1, n2) {
@@ -42,28 +43,11 @@ function contains(arr, n) {
     return false;
 }
 
+
 //https://www.mathblog.dk/project-euler-61-numbers-cyclic-property/
 //Need to find a way to make it a recursive function
 //Right now, the output contains arrays for each number with other numbers that could come to the right of it.
 //The website above tries to find the left most element and then tries to generate the next right element and so on till 6 numbers are found in a chain. Need to implement the checking based on the last added number still
-for (const starting of polygonal_numbers) {
-    let possible_chain = [starting];
-    for (const next of polygonal_numbers) {
-        //Checking if the number is of different type, is cyclic and not a duplicate
-        if (starting[0] != next[0] && isCyclic(starting[1], next[1]) && !contains(possible_chain, next)) {
-            //If length is 5, i.e found first 5 members of the chain already, then we check if it can wrap around
-            if (possible_chain.length == 5) {
-                if (isCyclic(next[1], possible_chain[0][1])) {
-                    //If yes, solution is found and we can return the complete chain
-                    return possible_chain;
-                }
-            } else {
-                //Else if the current chain length is not 5
-                possible_chain.push(next);
-            }
-        }
-    }
-    console.log(possible_chain);
-}
 
+console.log(polygonal_numbers);
 // function findNext(last, )
