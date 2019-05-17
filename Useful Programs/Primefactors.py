@@ -37,5 +37,5 @@ def uniquePrimeFactors(n):
     return list(factors)
 
 
-print(primeFactors(24))
+print(primeFactors(20))
 print(uniquePrimeFactors(24))

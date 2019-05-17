@@ -99,4 +99,9 @@ function multiply(a, b) {
 }
 
 // console.log(add('1999', '1'));
-console.log(multiply('00012', '003'));
+// console.log(multiply('00012', '003'));
+
+module.exports = {
+    add,
+    multiply
+};

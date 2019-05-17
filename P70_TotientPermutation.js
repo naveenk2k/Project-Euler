@@ -8,6 +8,8 @@ Find the value of n, 1 < n < 107, for which φ(n) is a permutation of n and the 
 ANSWER: 8319823 (~90s)
 */
 
+//? TODO: Can be optimised greatly using insights from: https://projecteuler.net/thread=70#146
+
 function phi(n) {
     let result = n; // Initialize result as n
 

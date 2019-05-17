@@ -18,6 +18,8 @@ Find the value of n ≤ 1,000,000 for which n/φ(n) is a maximum.
 ANSWER: 510510 (~1s)
 */
 
+// Best implementation I've found for phi(n). Don't use Euler's product formula - it's way slower and multiplying decimals screws things up MASSIVELY. Repeated subtraction (like below) is the way to go.
+
 function phi(n) {
     let result = n; // Initialize result as n
 

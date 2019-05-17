@@ -34,3 +34,8 @@ function isPandigitalInBaseb(n, b = 10) {
     //Checking sets equality
     return digits.size === found.size && [...digits].every(value => found.has(value));
 }
+
+module.exports = {
+    isPandigital,
+    isPandigitalInBaseb
+};

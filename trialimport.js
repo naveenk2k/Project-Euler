@@ -35,6 +35,7 @@
 
 // console.log("This is %d", "40");
 // console.table([1, 2, 3]);
+/*
 const code = 5;
 console.error('error #%d', code);
 console.time('loop');
@@ -42,3 +43,26 @@ for (let i = 0; i < 100; i++);
 console.timeLog('loop');
 for (let i = 0; i < 100; i++);
 console.timeEnd('loop');
+*/
+
+
+function largestPrimeFactor(val, divisor = 2) {
+    let square = (val) => Math.pow(val, 2);
+
+    while ((val % divisor) != 0 && square(divisor) <= val) {
+        divisor++;
+    }
+
+    return square(divisor) <= val
+        ? largestPrimeFactor(val / divisor, divisor)
+        : val;
+}
+
+let limit = 10;
+let count = 0;
+for (let i = 1; i <= 10**limit; i++) {
+    if (largestPrimeFactor(i) < Math.sqrt(i))
+        count++;
+}
+
+console.log(count);
