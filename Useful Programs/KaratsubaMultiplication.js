@@ -1,6 +1,6 @@
 // Implementation of Karatsuba Integer Multiplication Algorithm
 
-//NOTE: This is probably much faster than the other 'school implementation' of multiplication in NumberOperations.js but this will fail for very big numbers since recursion depth will be very high and since JS can't add/subtract very big numbers.
+//NOTE: This is usually much faster than the other 'school implementation' of multiplication in NumberOperations.js but this will fail for very big numbers since recursion depth will be very high and since JS can't add/subtract very big numbers.
 
 // Refer to https://www.youtube.com/watch?v=JCbZayFr9RE for explanation of the algorithm.
 // Refer to http://moais.imag.fr/membres/denis.trystram/SupportsDeCours/Karatsuba.pdf for analysis of the algorithm.

@@ -28,9 +28,8 @@ Find the sum of FITs for the BOPs.
 ANSWER: 37076114526 (~3ms)
 */
 
-/* NOTE:
-LOGIC-
-To calculate the next term in a sequence using differences, you just take the differences until its a single value and then extrapolate the next term.For example:
+/* LOGIC:
+To calculate the next term in a sequence using differences, you just take the differences until it's a single value and then extrapolate the next term. For example:
 
 1 8 27
  7 19

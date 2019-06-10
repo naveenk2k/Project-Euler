@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3",
+    "python.pythonPath": "/usr/local/bin/python3",
     "code-runner.clearPreviousOutput": true,
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.wordWrap": "on",
