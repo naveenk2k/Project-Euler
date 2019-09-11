@@ -14,7 +14,7 @@ function getProperDivisors(n) {
     return divisors.sort((a, b) => a - b);
 }
 
-console.log(getProperDivisors(24));
+// console.log(getProperDivisors(600851475143));
 
 function getProperDivisorsSum(n) {
     let sum = 0;
@@ -30,3 +30,20 @@ function getProperDivisorsSum(n) {
     sum -= n;
     return sum;
 }
+
+function largestPrimeFactor(val, divisor = 2) {
+    let square = (val) => Math.pow(val, 2);
+
+    while ((val % divisor) != 0 && square(divisor) <= val) {
+        divisor++;
+    }
+
+    return square(divisor) <= val ?
+        largestPrimeFactor(val / divisor, divisor) :
+        val;
+}
+
+let result = largestPrimeFactor(600851475143);
+console.log(result);
+
+console.log(600851475143 < 10000000000);

@@ -30,7 +30,7 @@ const saveEmptyPositions = grid => {
         }
     }
     return emptyPositions;
-}
+};
 
 // Checks if the value can be in the row of the grid
 const checkRow = (grid, row, value) => {
@@ -39,7 +39,7 @@ const checkRow = (grid, row, value) => {
             return false;
     }
     return true;
-}
+};
 
 // Checks if the value can be in the column of the grid
 const checkCol = (grid, col, value) => {
@@ -48,7 +48,7 @@ const checkCol = (grid, col, value) => {
             return false;
     }
     return true;
-}
+};
 
 // Checks if the value can be in the box of the grid
 const check3x3Grid = (grid, row, col, value) => {

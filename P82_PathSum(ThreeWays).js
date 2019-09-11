@@ -1,147 +1,79 @@
-//NOTE: Below logic is wrong. (note2)
+/* QUESTION:
+NOTE: This problem is a more challenging version of Problem 81.
 
+The minimal path sum in the 5 by 5 matrix below, by starting in any cell in the left column and finishing in any cell in the right column, and only moving up, down, and right, is indicated in red and bold; the sum is equal to 994.
 
-//Reading the file and storing the numbers as an array of contiguous elements (ignoring new lines)
+131, 673, 234, 103, 18
+201, 96, 342, 965, 150
+630, 803, 746, 422, 111
+537, 699, 497, 121, 956
+805, 732, 524, 37, 331
+
+Find the minimal path sum, in matrix.txt(right click and "Save Link/Target As..."), a 31 K text file containing a 80 by 80 matrix, from the left column to the right column.
+*/
+
+// ANSWER: 260324 (~8ms)
+
+console.time('time taken');
+
+//Reading the file and storing the numbers in a 2D array
 let fs = require('fs');
 let numbers = fs.readFileSync('/Users/naveen/Desktop/Naveen/Other/Programming/Project\ Euler/p082_matrix.txt', 'utf8').trim().split('\n');
-// let numbers = fs.readFileSync('/Users/naveen/Desktop/Naveen/Other/Programming/Project\ Euler/trial82.txt', 'utf8').trim().split('\n');
 for (let i = 0; i < numbers.length; i++) {
-    numbers[i] = numbers[i].split(',');
+    numbers[i] = numbers[i].split(',').map(Number);
 }
-numbers = numbers.join().split(',').map(Number);
 
-//Function to look for elements in a nested array (Basically Array.includes(val) but works for nested arrays)
+// Constants
+const rows = 80;
+const cols = 80;
 
-
-
-// let numbers = [
-//     131, 673, 234, 103, 18,
-//     201, 96, 342, 965, 150,
-//     630, 803, 746, 422, 111,
-//     537, 699, 497, 121, 956,
-//     805, 732, 524, 37, 331
-// ];
-
-// let numbers = [
-//     5, 56, 100, 20, 30,
-//     16, 96, 342, 65, 32,
-//     20, 80, 746, 422, 111,
-//     45, 80, 34, 50, 12,
-//     80, 32, 24, 37, 90
-// ];
-
-const rows = cols = 80;
-let matrix = [];
-
+// Creating a new 2D array to hold the answers.
+// answer[i][j] = minimum cost of getting from numbers[i][j] to any cell in the rightmost column
+let answer = [];
 for (let i = 0; i < rows; i++) {
-    matrix[i] = [];
+    answer[i] = [];
 }
 
-//Making a 2D matrix from all the numbers
-let k = 0;
-for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        matrix[i][j] = numbers[k];
-        k++;
+// Initialize answer array using following rule:
+// Shortest distance from an element in the last column to anywhere in the last column is itself (cause it's already in the last column)
+for (let i = 0; i < rows; i++)
+    answer[i][cols - 1] = numbers[i][cols - 1];
+
+
+// Pre-requisite NOTE: This logic works because all the numbers in the input are positive which means that if the minimal path for a cell (i, j) is to go upwards, then the minimal path for the cell above it (i-1, j) CAN'T be to go downwards
+
+/*  Logic:
+    STEPS:
+ *  1. Start from the last but one column and start work our way back. After iterating column 'j', we have the minimal path sum to get from each cell of column 'j' to some element in the rightmost row (target).
+ *  2. In each column, do the following:
+ *      i. Self-impose the condition that we can only traverse right and up. Find the minimal path sum for all the cells in a particular column starting from the topmost and working our way down.
+ *      ii. Self-impose the condition that we can only traverse down. Find the minimal path sum for all the cells in a particular column starting from the bottommost and working our way up.
+ *  3. The minimal path sum of any column is the minimal value in that column in the answers array. Compute this minimal value.
+ */
+
+// STEP 1:
+for (let j = cols - 2; j >= 0; j--) {
+
+    // STEP 2 i. : Going down and checking up + right options
+
+    // For first row, costOfCurrentCell = costOfGoingRight (as we can't go up)
+    answer[0][j] = numbers[0][j] + answer[0][j + 1];
+    // For all others, costOfCurrentCell = currentCellValue + min(costOfGoingUp, costOfGoingRight)
+    for (let i = 1; i < rows; i++) {
+        answer[i][j] = numbers[i][j] + Math.min(answer[i - 1][j], answer[i][j + 1]);
+    }
+
+    // STEP 2 ii. : Going up and checking down options as compared to previously found solution just above^
+
+    // We can start from second last row because we've already found the best value for the bottom row as we can't go further down from there
+    // For all others, costOfCurrentCell = min(costOfCurrentCell, currentCellValue + costOfGoingDown)
+    for (let i = rows - 2; i >= 0; i--) {
+        answer[i][j] = Math.min(answer[i][j], numbers[i][j] + answer[i + 1][j]);
     }
 }
-//matrix contains all the numbers as a 2D matrix.
 
-// NOTE: For each element in the last column, work your way back by going left, up or down and choosing the minimum sum out of those options. At the end, compare which minimum sum is the lowest to get the over all answer.
-let overallMinimum = 1000000; //large to make sure none of the values are greater than this limit
-for (let k = 0; k < 1; k++) {
-    let i = k;
-    let j = cols - 1;
-    let visited = [];
-    let visitedValues = [];
-    // matrix[i][cols - 1] represents the elements in the last column (this is the starting position)
-    //For each ending cell in the right-most column, calculate the minimum cost to get there
-    let currentMinimum = matrix[i][j];
-    visited.push([i, j].join(','));
-    visitedValues.push(matrix[i][j]);
-    //The only move is left
-    j = j - 1;
-    let reachedColumnOne = false;
-    //Code to traverse backwards from the last column's cell
-    while (!reachedColumnOne) {
-        // console.log(i, j);
-        currentMinimum += matrix[i][j];
-        visited.push([i, j].join(','));
-        visitedValues.push(matrix[i][j]);
+// STEP 3:
+answer = Math.min(...answer.map(x => x[0]));
+console.log(answer);
 
-        // console.log(visited);
-        if (j == 0) {
-            reachedColumnOne = true;
-            // console.log(currentMinimum, visited);
-            // currentMinimum = 10 ** 7;
-            break;
-        }
-        [i, j] = getNextPosition(i, j, visited);
-        //Can't repeat elements, i.e go over the same value more than once
-        if (visited.includes(i.toString() + ',' + j.toString())) {
-            // reachedColumnOne = false;
-            break;
-        }
-    }
-    if (currentMinimum < overallMinimum && reachedColumnOne) {
-        overallMinimum = currentMinimum;
-    }
-    // console.log(visited);
-    console.log(visitedValues);
-}
-
-
-
-function getNextPosition(r, c, invalidIndexes) {
-    //the left one if it's exactly to the right of first column (to minimize number of things we add)
-    if (c == 1) return [r, 0];
-    if (r <= 0) {
-        //If top row, check only down and left
-        if (matrix[r + 1][c] >= matrix[r][c - 1] && !invalidIndexes.includes(r.toString() + ',' + (c - 1).toString())) {
-            return [r, c - 1];
-        } else if (!invalidIndexes.includes((r + 1).toString() + ',' + (c).toString())) {
-            return [r + 1, c];
-        } else return [r, c];
-    } else if (r >= rows - 1) {
-        //If bottom row, check only top and left
-        if (matrix[r - 1][c] >= matrix[r][c - 1] && !invalidIndexes.includes(r.toString() + ',' + (c - 1).toString())) {
-            return [r, c - 1];
-        } else if (!invalidIndexes.includes((r - 1).toString() + ',' + (c).toString())) {
-            return [r - 1, c];
-        } else return [r, c];
-    } else {
-        //If anywhere in between
-        //Case 1: Top cell is lowest
-        if (matrix[r - 1][c] <= matrix[r + 1][c] && matrix[r - 1][c] <= matrix[r][c - 1]) {
-            if (!invalidIndexes.includes((r - 1).toString() + ',' + (c).toString())) {
-                return [r - 1, c];
-            } else if (matrix[r + 1][c] <= matrix[r][c - 1] && !invalidIndexes.includes((r + 1).toString() + ',' + c.toString())) {
-                return [r + 1, c];
-            } else if (!invalidIndexes.includes((r).toString() + ',' + (c - 1).toString())) {
-                return [r, c - 1];
-            } else return [r, c];
-        }
-        //Case 2: Bottom cell is lowest
-        if (matrix[r + 1][c] <= matrix[r - 1][c] && matrix[r + 1][c] <= matrix[r][c - 1]) {
-            if (!invalidIndexes.includes((r + 1).toString() + ',' + c.toString())) {
-                return [r + 1, c];
-            } else if (matrix[r - 1][c] <= matrix[r][c - 1] && !invalidIndexes.includes((r - 1).toString() + ',' + c.toString())) {
-                return [r - 1, c];
-            } else if (!invalidIndexes.includes((r).toString() + ',' + (c - 1).toString())) {
-                return [r, c - 1];
-            } else return [r, c];
-        }
-        //Case 3: Left cell is lowest
-        if (matrix[r][c - 1] <= matrix[r + 1][c] && matrix[r][c - 1] <= matrix[r - 1][c]) {
-            if (!invalidIndexes.includes(r.toString() + ',' + (c - 1).toString())) {
-                return [r, c - 1];
-            } else if (matrix[r + 1][c] <= matrix[r - 1][c] && !invalidIndexes.includes((r + 1).toString() + ',' + c.toString())) {
-                return [r + 1, c];
-            } else if (!invalidIndexes.includes((r - 1).toString() + ',' + (c).toString())) {
-                return [r - 1, c];
-            } else return [r, c];
-        }
-
-    }
-}
-console.log(overallMinimum);
+console.timeEnd('time taken');

@@ -12,6 +12,8 @@ for (let i = 0; i < numbers.length; i++) {
 }
 numbers = numbers.join().split(',').map(Number);
 
+// Dynamic Programming with memoization
+
 const rows = 80;
 const cols = 80;
 let matrix = [];

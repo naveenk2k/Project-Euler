@@ -16,7 +16,7 @@ const fs = require('fs');
 const sudokuSolver = require('./Useful Programs/sudokuSolver');
 
 // Parsing the sudoku grids as a array of 2D grids
-const file = fs.readFileSync("p096_sudoku.txt", 'utf8');
+const file = fs.readFileSync('p096_sudoku.txt', 'utf8');
 const lines = file.split('\n');
 let grids = [];
 for (let i = 0; i < lines.length; i += 10) {

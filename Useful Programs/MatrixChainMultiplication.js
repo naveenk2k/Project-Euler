@@ -4,6 +4,7 @@
  */
 
 // Best explanation: https://www.youtube.com/watch?v=GMzVeWpyTN0
+// GeeksForGeeks Website: https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/
 
 // Takes a chain of matrices to multiply, p: [4, 10, 3, 12, 20, 7]
 // So the individual matrices are: (4x10), (10x3), (3x12), (12x20), (20x7)
