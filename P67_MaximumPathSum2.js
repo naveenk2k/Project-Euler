@@ -27,11 +27,12 @@ let num = fs
 // *NOTE*: For some reason, an extra line is added at the end of the file so we delete it. Here it makes no difference because the size variable only counts 100 rows but otherwise there would be an extra empty line at the end which can't be added.
 
 let size = 100;
+
+// Create a 2D array and fill it with values from the file
 let a = new Array(size);
 for (let i = 0; i < size; i++) {
     a[i] = new Array(size);
 }
-
 let k = 0;
 for (let i = 0; i < size; i++) {
     for (let j = 0; j <= i; j++) {
@@ -40,9 +41,15 @@ for (let i = 0; i < size; i++) {
     }
 }
 
-for (let i = size - 2; i >= 0; --i) {
+/* Logic:
+ *  Start at the row second from bottom and replace the value at a particular cell with value + max(the 2 numbers below it).
+ * Continue this for all rows.
+ * Finally, the value at the first row is our required answer.
+ */
+
+for (let i = size - 2; i >= 0; i--) {
     for (let j = 0; j <= i; j++) {
-        a[i][j] += Math.max(a[i + 1][j], a[i + 1][j + 1])
+        a[i][j] += Math.max(a[i + 1][j], a[i + 1][j + 1]);
     }
 }
 

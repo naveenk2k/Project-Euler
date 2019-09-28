@@ -1,3 +1,146 @@
+/* Logic-
+Generate a bunch of primes.
+Create all combinations of their sums when taken 2 at a time, 3 at a time, 4 at a time, etc.
+When we generate any number by summing primes, increment the counter for the number of ways it's possible to form that number.
+The number which hits 500 first is our answer.
+
+Need to debug because we're getting the wrong answer
+*/
+
+let primes = require('./Useful Programs/SieveOfEratosthenes')(500);
+
+
+
+let count = [];
+
+function getAnswer() {
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            let index = primes[i] + primes[j];
+            if (count[index] === undefined) {
+                count[index] = 0;
+            }
+            count[index]++;
+            if (count[index] >= 5000) {
+                console.log('FOUND at ' + index + count[index]);
+
+                return;
+
+            }
+        }
+    }
+
+
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            for (let k = j; k < primes.length; k++) {
+                let index = primes[i] + primes[j] + primes[k];
+                if (count[index] === undefined) {
+                    count[index] = 0;
+                }
+                count[index]++;
+                if (count[index] >= 5000) {
+                    console.log('FOUND at ' + index + count[index]);
+
+                    return;
+
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            for (let k = j; k < primes.length; k++) {
+                for (let l = k; l < primes.length; l++) {
+                    let index = primes[i] + primes[j] + primes[k] + primes[l];
+                    if (count[index] === undefined) {
+                        count[index] = 0;
+                    }
+                    count[index]++;
+                    if (count[index] >= 5000) {
+                        console.log('FOUND at ' + index + count[index]);
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            for (let k = j; k < primes.length; k++) {
+                for (let l = k; l < primes.length; l++) {
+                    for (let m = l; m < primes.length; m++) {
+                        let index = primes[i] + primes[j] + primes[k] + primes[l] + primes[m];
+                        if (count[index] === undefined) {
+                            count[index] = 0;
+                        }
+                        count[index]++;
+                        if (count[index] >= 5000) {
+                            console.log('FOUND at ' + index + count[index]);
+
+
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            for (let k = j; k < primes.length; k++) {
+                for (let l = k; l < primes.length; l++) {
+                    for (let m = l; m < primes.length; m++) {
+                        for (let n = m; n < primes.length; n++) {
+                            let index = primes[i] + primes[j] + primes[k] + primes[l] + primes[m] + primes[n];
+                            if (count[index] === undefined) {
+                                count[index] = 0;
+                            }
+                            count[index]++;
+                            if (count[index] >= 5000) {
+                                console.log('FOUND at ' + index + count[index]);
+
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < primes.length; i++) {
+        for (let j = i; j < primes.length; j++) {
+            for (let k = j; k < primes.length; k++) {
+                for (let l = k; l < primes.length; l++) {
+                    for (let m = l; m < primes.length; m++) {
+                        for (let n = m; n < primes.length; n++) {
+                            for (let o = n; o < primes.length; o++) {
+                                let index = primes[i] + primes[j] + primes[k] + primes[l] + primes[m] + primes[n] + primes[o];
+                                if (count[index] === undefined) {
+                                    count[index] = 0;
+                                }
+                                count[index]++;
+                                if (count[index] >= 5000) {
+                                    console.log('FOUND at ' + index + count[index]);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+getAnswer();
+
+/*
 function isPrime(n) {
     if (n <= 1) {
         return false; //1 isn't prime
@@ -43,3 +186,4 @@ function getWays(n) {
 
 console.log(getWays(8));
 console.log(ways);
+*/
