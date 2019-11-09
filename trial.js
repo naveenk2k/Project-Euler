@@ -19,16 +19,3 @@
 // console.log(x);
 // let y = BigInt(122);
 // console.log(typeof y)
-
-function* f(n) {
-    if (n % 2 !== 0)
-        return false;
-    else {
-        yield true;
-        return n + 1;
-    }
-}
-
-const fn = f(2);
-console.log(fn.next());
-console.log(fn.next());
