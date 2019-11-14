@@ -14,8 +14,6 @@ function getProperDivisors(n) {
     return divisors.sort((a, b) => a - b);
 }
 
-// console.log(getProperDivisors(600851475143));
-
 function getProperDivisorsSum(n) {
     let sum = 0;
     for (let i = 1; i <= Math.sqrt(n); i++) {
@@ -43,7 +41,8 @@ function largestPrimeFactor(val, divisor = 2) {
         val;
 }
 
-let result = largestPrimeFactor(600851475143);
-console.log(result);
-
-console.log(600851475143 < 10000000000);
+module.exports = {
+    getProperDivisors,
+    getProperDivisorsSum,
+    largestPrimeFactor
+};
