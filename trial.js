@@ -19,3 +19,8 @@
 // console.log(x);
 // let y = BigInt(122);
 // console.log(typeof y)
+
+let a = 3;
+console.log((++a) * 3);
+console.log((a++) * 3);
+console.log(a);

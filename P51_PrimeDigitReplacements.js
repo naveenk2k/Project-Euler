@@ -1,42 +1,47 @@
 //http://mijkenator.github.io/2016/05/31/erlang-python-project-euler-51/
 
-function getPrimes(limit) {
-    //Sieve of Eratostenes
-    let primes = Array(limit).fill(true);
-    primes[0] = primes[1] = false;
-    let primeNumbers = [];
-    for (let i = 0; i < primes.length; i++) {
-        if (primes[i]) {
-            primeNumbers.push(i);
-            for (let j = i; j < limit; j += i) {
-                primes[j] = false;
+// Doesn't scale after 10**6
+
+const sieve = require('./Useful Programs/SieveOfEratosthenes');
+const isPrime = require('./Useful Programs/PrimeTest');
+const limit = 10 ** 6;
+const primeValueFamily = 7;
+
+let primes = sieve(limit).filter(p => p > 10 ** 4);
+
+
+const maxPrimeFamilySize = (prime, index1, index2) => {
+    let familySize = 0;
+    for (let i = 0; i < 10; i++) {
+        let replacedNumber = prime.toString();
+        replacedNumber = replacedNumber.substr(0, index1) + i.toString() + replacedNumber.substr(index1 + 1);
+        replacedNumber = replacedNumber.substr(0, index2) + i.toString() + replacedNumber.substr(index2 + 1);
+        replacedNumber = Number(replacedNumber);
+        if (isPrime(replacedNumber))
+            familySize++;
+    }
+    return familySize;
+};
+
+const isPrimeFamily = (prime, value) => {
+    const length = prime.toString().length;
+    for (let i = 1; i < length - 2; i++) {
+        for (let j = i + 1; j < length - 1; j++) {
+            if (maxPrimeFamilySize(prime, i, j) === value) {
+                return true;
             }
         }
     }
-    return primeNumbers;
-}
+    return false;
+};
 
-// Returns true if a number has duplicates, false if not
-function hasDuplicates(num) {
-    return (new Set(num.toString()).size != num.toString().length);
-}
-
-// console.log(getPrimes(1000000));
-
-let primes = getPrimes(1000000).filter(hasDuplicates).filter(prime => prime > 1000);
-console.log(primes.length, primes[0]);
-console.log(primes);
-// primes now contains all primes with duplicates such that each 1000 < prime < 1000000
-
-// No logic yet
-
-/*
-function getReplacedNumber(num, replacement, positions) {
-    //'replacement' is the number we want to replace in all the indexes part of array 'positions' in the original number 'num'
-    num = num.toString().split('');
-    for (const position of positions) {
-        num[position] = replacement;
+const solve = () => {
+    for (const prime of primes) {
+        if (isPrimeFamily(prime, primeValueFamily)) {
+            console.log(prime);
+            break;
+        }
     }
-    return Number(num.join(''));
-}
-*/
+};
+
+solve();
