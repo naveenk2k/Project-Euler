@@ -1,9 +1,37 @@
-/* Read 'Restricted part size or number of parts' from https://en.wikipedia.org/wiki/Partition_(number_theory)
+// DP doesn't work because the array size gets insanely large
+// Use Euler's formula
 
-By taking conjugates, the number pk(n) of partitions of n into exactly k parts is equal to the number of partitions of n in which the largest part has size k.[13] The function pk(n) satisfies the recurrence
+console.time('Time');
 
-pk(n) = pk(n − k) + pk−1(n − 1)
-with initial values p0(0) = 1 and pk(n) = 0 if n ≤ 0 or k ≤ 0. This recurrence is correct because pk(n − k) counts the partitions of n where the smallest part is greater than 1 (remove k 1's and add them to each partition) and pk−1(n − 1) counts the partitions where the smallest part is 1. One recovers the function p(n) by
+const size = 10 ** 4;
 
-{\displaystyle p(n)=\sum _{k=1}^{n}p_{k}(n).} {\displaystyle p(n)=\sum _{k=1}^{n}p_{k}(n).}
-*/
+const solve = size => {
+    const dp = Array(size).fill(0).map(x => Array(size).fill(null));
+
+    for (let j = 1; j < size; j++)
+        dp[0][j] = 0;
+
+    for (let i = 0; i < size; i++)
+        dp[i][0] = 1;
+
+    for (let i = 1; i < size; i++) {
+        for (let j = 1; j < size; j++) {
+            if (i > j)
+                dp[i][j] = dp[i - 1][j];
+            else
+                dp[i][j] = (dp[i - 1][j] + dp[i][j - i]) % 10 ** 6;
+
+            if (dp[i][j] === 0) {
+                console.log(dp[i][j], j);
+                return [j];
+            }
+        }
+    }
+
+    // console.table(dp);
+    return dp[size - 1][size - 1];
+};
+
+
+console.log(solve(size));
+console.timeEnd('Time');
