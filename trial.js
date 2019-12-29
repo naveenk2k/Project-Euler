@@ -24,3 +24,5 @@ let a = 3;
 console.log((++a) * 3);
 console.log((a++) * 3);
 console.log(a);
+
+console.log(Math.sqrt(3));
