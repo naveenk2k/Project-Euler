@@ -1,35 +1,87 @@
-// DP doesn't work because the array size gets insanely large
-// Use Euler's formula
+/*
+Question:
+Let p(n) represent the number of different ways in which n coins can be separated into piles. For example, five coins can be separated into piles in exactly seven different ways, so p(5)=7.
 
-const size = 10 ** 3;
-// const size = 6;
+OOOOO
+OOOO   O
+OOO   OO
+OOO   O   O
+OO   OO   O
+OO   O   O   O
+O   O   O   O   O
 
-const solve = size => {
-    const dp = Array(size).fill(0).map(x => Array(size).fill(null));
+Find the least value of n for which p(n) is divisible by one million.
 
-    for (let j = 1; j < size; j++)
-        dp[0][j] = 0;
+Answer: 55374 (~450ms)
+*/
 
-    for (let i = 0; i < size; i++)
-        dp[i][0] = 1;
+/*
+Logic:
+I made use of the Pentagonal Number Theorem (originally by Euler):
+https://en.wikipedia.org/wiki/Pentagonal_number_theorem#Relation_with_partitions
 
-    for (let i = 1; i < size; i++) {
-        for (let j = 1; j < size; j++) {
-            if (i > j)
-                dp[i][j] = dp[i - 1][j];
+p(n) = p(n-1) + p(n-2) - p(n-5) - p(n-7) + p(n-12) + ...
+
+In the above recurrance, for any i'th term 'p(n-k)', 'k' is the i'th generalized pentagonal number.
+Further, there are two arrays to store the sequences (memoization) so that recursion is not too expensive.
+*/
+
+console.time('Time');
+
+const partitions = [];
+const generalizedPentagonals = [];
+
+const getNthGeneralizedPentagonal = n => {
+
+    if (!generalizedPentagonals[n]) {
+        let k = Math.ceil(n / 2);
+        if (n % 2 === 0)
+            k *= -1;
+        generalizedPentagonals[n] = (k * (3 * k - 1)) / 2;
+    }
+
+    return generalizedPentagonals[n];
+};
+
+const getNthPartition = n => {
+    if (n < 0)
+        return 0;
+
+    if (n === 0)
+        return 1;
+
+    if (!partitions[n]) {
+        partitions[n] = 0;
+
+        // Implementation of the formula given above
+        let i = 1;
+        let k = getNthGeneralizedPentagonal(i);
+        while ((n - k) >= 0) {
+            if (i % 4 === 1 || i % 4 === 2)
+                partitions[n] += getNthPartition(n - k);
             else
-                dp[i][j] = (dp[i - 1][j] + dp[i][j - i]);
+                partitions[n] -= getNthPartition(n - k);
 
-            if (dp[i][j] % (10 ** 6) === 0) {
-                console.log('here', dp[i][j], j);
-                return [j];
-            }
+            i++;
+            k = getNthGeneralizedPentagonal(i);
         }
     }
 
-    // console.table(dp);
-    return dp[size - 1][size - 1];
+    partitions[n] %= 10 ** 6;
+    return partitions[n];
 };
 
+const solve = () => {
+    let found = false;
+    let i = 0;
+    while (!found) {
+        if (getNthPartition(i) === 0) {
+            console.log(i);
+            found = true;
+        }
+        i++;
+    }
+};
 
-console.log(solve(size));
+solve();
+console.timeEnd('Time');
