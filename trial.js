@@ -20,9 +20,14 @@
 // let y = BigInt(122);
 // console.log(typeof y)
 
-let a = 3;
-console.log((++a) * 3);
-console.log((a++) * 3);
-console.log(a);
+let n = 7;
 
-console.log(Math.sqrt(3));
+for (let i = 1; i < n + 1; i++) {
+    for (let j = i; j < n + 1; j++) {
+        process.stdout.write(`${j % (n + 1)}`);
+    }
+    for (let j = i - 1; j > 0; j--)
+        process.stdout.write(`${j}`);
+
+    console.log();
+}

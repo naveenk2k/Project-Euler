@@ -15,7 +15,9 @@ const getUniquePrimeFactors = n => {
         factors.add(n);
     }
     return [...factors];
-}
+};
+
+console.log(getUniquePrimeFactors(24));
 
 module.exports = {
     getUniquePrimeFactors

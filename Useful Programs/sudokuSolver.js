@@ -72,9 +72,7 @@ const check3x3Grid = (grid, row, col, value) => {
 
 // Checks if value in (row, col) of grid is a valid move
 const checkValue = (grid, row, col, value) => {
-    if (checkRow(grid, row, value) && checkCol(grid, col, value) && check3x3Grid(grid, row, col, value))
-        return true;
-    return false;
+    return (checkRow(grid, row, value) && checkCol(grid, col, value) && check3x3Grid(grid, row, col, value));
 }
 
 // Back-tracking algorithm to solve a sudoku
