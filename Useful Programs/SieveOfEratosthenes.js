@@ -54,11 +54,11 @@ const sieve2 = n => {
 
 module.exports = SieveOfEratosthenes;
 
-const limit = 22;
+// const limit = 22;
 
-console.time('one');
-console.log(SieveOfEratosthenes(limit));
-console.timeEnd('one');
+// console.time('one');
+// console.log(SieveOfEratosthenes(limit));
+// console.timeEnd('one');
 // console.time('two');
 // sieve2(limit);
 // console.timeEnd('two');

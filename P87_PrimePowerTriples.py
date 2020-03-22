@@ -1,10 +1,9 @@
 '''
 Takes 7s for limit = 1000
 '''
-limit = 50000000
+
 answer = []
 count = 0
-
 
 def SieveOfEratosthenesArray(limit):
     primes = [True] * limit
@@ -18,18 +17,18 @@ def SieveOfEratosthenesArray(limit):
     return primeNumbers
 
 
-primes = SieveOfEratosthenesArray(450)
+primes = SieveOfEratosthenesArray(200)
+
+print(primes)
 
 for i in primes:
     for j in primes:
         for k in primes:
             num = (k**4 + j**3 + i**2)
-            if num < limit and num not in answer:
+            if num < 50000000 and num not in answer:
                 answer.append(num)
                 count += 1
 
 print(count)
-answer.sort()
-print(answer[-1])
 # 133450 (150s for primes till 450)
 # 49912305
