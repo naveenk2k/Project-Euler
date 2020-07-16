@@ -53,7 +53,7 @@ const dp = Array(size).fill(0).map(x => Array(size).fill(null));
 for (let i = 1; i < size; i++)
     dp[0][i] = 0;
 
-/*  1 way to make 0 using {0} (use only the hypothethetical value of 0),
+/*  1 way to make 0 using {0} (use only the hypothetical value of 0),
  *  1 way to make 0 using {0, 1},
  *  1 way to make 0 using {0, 1, 2},
  *  .

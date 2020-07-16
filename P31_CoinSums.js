@@ -15,7 +15,9 @@ Explanation at: https://algorithmist.com/wiki/Coin_change
 
 console.time('Time');
 const s = [1, 2, 5, 10, 20, 50, 100, 200];
+// const s = [2, 5, 3, 6];
 
+// Returns the number of ways to form amount 'n' using coins in the array 's' upto zero-based index 'm'
 const getCount = (n, m) => {
     if (n < 0 || m < 0) {
         return 0;
@@ -26,5 +28,5 @@ const getCount = (n, m) => {
     return (getCount(n, m - 1) + getCount(n - s[m], m));
 }
 
-console.log(getCount(200, 7));
+console.log(getCount(200, s.length - 1));
 console.timeEnd('Time');
