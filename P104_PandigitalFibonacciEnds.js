@@ -24,7 +24,7 @@ while (!found) {
     b = c;
     i++;
 
-    // NOTE: Tried to remove 60 numbers from the middle (as suggested by https://euler.s tephan-brumme.com/104/) cause we only care about start and end but this didn't work for some reason.
+    // NOTE: Tried to remove 60 numbers from the middle (as suggested by https://euler.stephan-brumme.com/104/) cause we only care about start and end but this didn't work for some reason.
     // if (b.length > 100) {
     //     a = a.slice(0, 20) + a.slice(-20);
     //     b = b.slice(0, 20) + b.slice(-20);

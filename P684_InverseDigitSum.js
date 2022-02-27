@@ -1,7 +1,7 @@
 /*
 Progress:
-Calculates S(fi) for the first 24 fibonacci numbers pretty fast, but not above that.
-Find a way to cache values better to avoid calculating s(n) from 1 to n for all values of S(n).
+Find better ways to store precomputed values.
+fillS(5e4); runs in around 5s but fillS(1e5) takes far too long.
 */
 
 const mod = 10 ** 9 + 7;
@@ -16,30 +16,40 @@ const s = n => {
     return memoized_s[n];
 }
 
-const S = n => {
-    let sum = 0n;
-    for (let i = 1; i < n + 1; i++) {
-        sum += s(i);
-        sum %= BigInt(mod);
+const memoized_S = [];
+// This calculates S[i] based on the formula S[i] = S[i-1] + s(i).
+// TODO: Should this be modded too?
+const fillS = (n) => {
+    memoized_S[0] = 0n;
+    for (let i = 1; i <= n; ++i) {
+        memoized_S[i] = (memoized_S[i - 1] + BigInt(s(i))) % BigInt(mod);
     }
-    return sum;
+}
+
+const S = n => {
+    if (!memoized_S[n]) {
+        console.log("Not enough S");
+        process.exit(0);
+    }
+    else return memoized_S[n];
 };
 
 const solve = () => {
     let answer = 0n;
     let n1 = 0;
     let n2 = 1;
-    for (let i = 2; i < 24; i++) {
+    fibs = [n1, n2];
+    for (let i = 2; i < 10; ++i) {
         let n = n1 + n2;
+        fibs.push(n);
         answer += (BigInt(S(n)) % BigInt(mod));
-        // answer %= mod;
-        // console.log(answer);
         n1 = n2;
         n2 = n;
     }
-    console.log(answer);
+    console.log('answer :>> ', answer);
 };
-//4107043021n
-solve();
-// s(38);
-// console.log(S(20));
+
+fillS(5e4);
+console.log(memoized_S[memoized_S.length - 1]);
+// solve();
+console.log(`S(20) = ${memoized_S[20]}`);
